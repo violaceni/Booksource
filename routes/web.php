@@ -11,6 +11,10 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::redirect('/', '/booksource');
+Route::prefix('/booksource')->group(function () {
+    Route::get('/', ['uses' => 'MainDataController@showMain', 'as' => 'booksource.main']);
+    Route::get('/index', ['uses' => 'MainDataController@showData', 'as' => 'booksource.index']);
+    Route::get('/insert', ['uses' => 'MainDataController@addData', 'as' => 'booksource.insert']);
+    Route::post('/store', ['uses' => 'MainDataController@storeData', 'as' => 'booksource.store']);
 });
