@@ -46,16 +46,9 @@ class MainDataController extends Controller
         $request_data = $request->all();
         $data = self::prepareData($request_data);
 
-
-        $authorDuplicateCheck = Author::where('name', $data['author']['name'])
-            ->where('age', $data['author']['age'])
-            ->where('address', $data['author']['address'])
-            ->get();
-
-        $bookDuplicateCheck = Book::where('name', $data['book']['name'])
-            ->where('release_date', $data['book']['release_date'])
-            ->get();
-
+        $authorDuplicateCheck = Author::checkDuplicateAuthor($data['author']['name'],$data['author']['age'],$data['author']['address']);
+        $bookDuplicateCheck = Book::checkDuplicateBook($data['book']['name'],$data['book']['release_date']);
+        
         $authorDuplicateRecord = (int) $authorDuplicateCheck->count();
         $bookDuplicateRecord = (int) $bookDuplicateCheck->count();
 
