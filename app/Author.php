@@ -24,4 +24,14 @@ class Author extends Model
             ->get();
         return $authorDuplicateCheck;
     }
+
+    public static function prepareData(array $request){
+        
+        $author_data = [];
+        $author_data['name'] = $request['name'];
+        $author_data['address'] = $request['address'];
+        $author_data['age'] = $request['age'];
+
+        return $author_data;
+    }
 }
