@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Author;
 use App\Book;
-use App\Http\Controllers\Controller;
+use App\Author;
+use App\MainModel;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 
@@ -44,66 +45,19 @@ class MainDataController extends Controller
         }
 
         $request_data = $request->all();
-        $data = self::prepareData($request_data);
 
-        $authorDuplicateCheck = Author::checkDuplicateAuthor($data['author']['name'],$data['author']['age'],$data['author']['address']);
-        $bookDuplicateCheck = Book::checkDuplicateBook($data['book']['name'],$data['book']['release_date']);
+        $book_data = Book::prepareData($request_data);
+        $author_data = Author::prepareData($request_data);
+       
+        $authorDuplicateCheck = Author::checkDuplicateAuthor($author_data['name'], $author_data['age'], $author_data['address']);
+        $bookDuplicateCheck = Book::checkDuplicateBook($book_data['name'], $book_data['release_date']);
         
         $authorDuplicateRecord = (int) $authorDuplicateCheck->count();
         $bookDuplicateRecord = (int) $bookDuplicateCheck->count();
 
-        switch (true) {
-            case ($authorDuplicateRecord == 0 and $bookDuplicateRecord == 0):
+        $check = MainModel::checkDuplicates($authorDuplicateRecord, $bookDuplicateRecord,$authorDuplicateCheck,$bookDuplicateCheck, $author_data, $book_data);
 
-                $author = Author::create($data['author']);
-                $book = Book::create($data['book']);
-                $author->books()->attach($book->id);
-
-                return Redirect::to('booksource/index')->with('message', 'Records successfully saved');
-                break;
-
-            case ($authorDuplicateRecord > 0 && $bookDuplicateRecord == 0):
-
-                $author_id = $authorDuplicateCheck[0]->id;
-                $author = Author::find($author_id);
-                $book = Book::create($data['book']);
-                $author->books()->attach($book->id);
-
-                return Redirect::to('booksource/index')->with('message', ' Book record successfully saved');
-                break;
-            case ($authorDuplicateRecord == 0 && $bookDuplicateRecord > 0):
-                $book_id = $bookDuplicateCheck[0]->id;
-                $author = Author::create($data['author']);
-                $author->books()->attach($book_id);
-
-                return Redirect::to('booksource/index')->with('message', 'Author record successfully saved');
-                break;
-            case ($authorDuplicateRecord > 0 && $bookDuplicateRecord > 0):
-
-                return Redirect::back()->withErrors("This author and this book exists")->withInput();
-                break;
-
-            default:
-                return Redirect::to('booksource/index');
-                break;
-        }
-    }
-
-    public static function prepareData(array $request)
-    {
-        $author_data = [];
-        $author_data['name'] = $request['name'];
-        $author_data['address'] = $request['address'];
-        $author_data['age'] = $request['age'];
-
-        $book_data = [];
-        $book_data['name'] = $request['book_name'];
-        $book_data['release_date'] = $request['release_date'];
-
-        return array(
-            'author' => $author_data,
-            'book' => $book_data,
-        );
+        return $check;
     }
 
 }

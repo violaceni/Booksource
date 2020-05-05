@@ -17,11 +17,21 @@ class Author extends Model
 
     public static function checkDuplicateAuthor($name, $age, $address)
     {
-
+        //add comment
         $authorDuplicateCheck = Author::where('name', $name)
             ->where('age', $age)
             ->where('address', $address)
             ->get();
         return $authorDuplicateCheck;
+    }
+
+    public static function prepareData(array $request){
+        
+        $author_data = [];
+        $author_data['name'] = $request['name'];
+        $author_data['address'] = $request['address'];
+        $author_data['age'] = $request['age'];
+
+        return $author_data;
     }
 }
