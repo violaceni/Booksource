@@ -17,7 +17,6 @@ class Author extends Model
 
     public static function checkDuplicateAuthor($name, $age, $address)
     {
-        //add comment on checkfunction
         $authorDuplicateCheck = Author::where('name', $name)
             ->where('age', $age)
             ->where('address', $address)
