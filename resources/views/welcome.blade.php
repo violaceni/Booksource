@@ -14,19 +14,6 @@
                     @endauth
                 </div>
             @endif
-
-            <div class="content">
-                <div class="welcome-title">
-                    Booksource
-                </div>
-                <div class="button-row">
-                    <div class="buttons">
-                        <button type="button" class="btn btn-success btn-lg" onclick="window.location='{{ route('booksource.index') }}'"><b>Show Data</b></a></button>
-                        <button type="button" class="btn btn-success btn-lg" onclick="window.location='{{ route('booksource.insert') }}'"><b>Add Data</b></a></button>
-                    </div>
-                </div>
-                </div>
-            </div>
         </div>
     </body>
 </html>

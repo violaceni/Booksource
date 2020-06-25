@@ -15,4 +15,11 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
         <script src="https://kit.fontawesome.com/7ac612aa46.js" crossorigin="anonymous"></script>
     </head>
+    <body>
+        <div id="app">
+            <Homepage> 
+            </Homepage>
+        </div>
+        <script src="/js/app.js"></script>
+    </body>
 </html>
