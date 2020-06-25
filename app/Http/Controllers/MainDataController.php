@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Book;
 use App\Author;
+use App\Book;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\AuthorResource;
 use App\MainModel;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 
@@ -16,6 +17,31 @@ class MainDataController extends Controller
     {
 
         return view('welcome');
+    }
+    public function index()
+    {
+        $data = [];
+        $authors = AuthorResource::collection(Author::all());
+        foreach ($authors as $author) {
+            if ($author->books != null) {
+                $data []= [
+                    'author' => [
+                        'name' => $author->name,
+                    ]
+                    ];  
+                foreach($author->books as $book){
+                    $data[] = [
+                        'books' =>[
+                            'bookName' => $book->name
+                        ]
+                    ];
+                }
+
+            }
+
+        }
+        
+        return $data;
     }
 
     public function showData()
@@ -48,14 +74,14 @@ class MainDataController extends Controller
 
         $book_data = Book::prepareData($request_data);
         $author_data = Author::prepareData($request_data);
-       
+
         $authorDuplicateCheck = Author::checkDuplicateAuthor($author_data['name'], $author_data['age'], $author_data['address']);
         $bookDuplicateCheck = Book::checkDuplicateBook($book_data['name'], $book_data['release_date']);
-        
+
         $authorDuplicateRecord = (int) $authorDuplicateCheck->count();
         $bookDuplicateRecord = (int) $bookDuplicateCheck->count();
 
-        $check = MainModel::checkDuplicates($authorDuplicateRecord, $bookDuplicateRecord,$authorDuplicateCheck,$bookDuplicateCheck, $author_data, $book_data);
+        $check = MainModel::checkDuplicates($authorDuplicateRecord, $bookDuplicateRecord, $authorDuplicateCheck, $bookDuplicateCheck, $author_data, $book_data);
 
         return $check;
     }
