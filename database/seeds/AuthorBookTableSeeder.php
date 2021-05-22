@@ -15,9 +15,7 @@ class AuthorBookTableSeeder extends Seeder
     {
         $books = Book::all();
         Author::all()->each(function ($author) use ($books) { 
-            $author->books()->attach(
-                $books->random(rand(1, 7))->pluck('id')->toArray(),
-            ); 
+            $author->books()->attach($books->random(rand(1, 7))->pluck('id')->toArray()); 
         });
     }
 }
