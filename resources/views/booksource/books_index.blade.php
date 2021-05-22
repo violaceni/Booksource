@@ -16,23 +16,20 @@
         </div>
     @endif
     <div class="card-columns">
-        @if(count($authors) > 0)
-            @foreach($authors as $author)
-                <div class="card authors">
-                    {{-- <div class="card-header"> --}}
-                    <div class="card-header author">{{$author->name}}</div>
-                    {{-- </div> --}}
+        @if(count($books) > 0)
+            @foreach($books as $book)
+                <div class="card books">
+                    <div class="card-header author">{{$book->name}}</div>
                     <div class="card-body text">
-                        @foreach($author->books as $book)
-                            <h5 class="card-title">{{$book->name}}</h5>
-                        @endforeach
+                        <div> Published date:  {{$book->release_date}}</div>
                     </div>
                 </div>
             @endforeach
+        
     </div>
     <div class="row">
         <div class="col-md-8">
-            {{$authors->links()}}
+            {{$books->links()}}
             @else
                 <p>No authors found</p>
             @endif

@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Book;
+use App\User;
 use App\Author;
 use App\MainModel;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 
@@ -14,7 +16,6 @@ class MainDataController extends Controller
 {
     public function showMain()
     {
-
         return view('welcome');
     }
 
@@ -60,4 +61,49 @@ class MainDataController extends Controller
         return $check;
     }
 
+    public function getBooks(){
+        $books = Book::orderBy('created_at', 'desc')->paginate(10);
+        return view('booksource.books_index')->with(['books' => $books]);
+    }
+    public function getAuthors(){
+        $authors = Author::orderBy('created_at', 'desc')->paginate(10);
+        return view('booksource.authors_index')->with(['authors' => $authors]);
+    }
+
+    public function getUsers(){
+        $users = User::orderBy('name', 'asc')->get();
+        return view('booksource.users_index')->with(['users' => $users]);
+    }
+
+    public function editUser(Request $request, $id){
+        $user = User::find($id);
+        return view('booksource.user_edit')->with(['user' => $user]);
+    }
+
+    public function updateUser(Request $request, $id){
+        $user = User::find($id)->update($request->all());  
+        return redirect('/booksource/users')->with(['message'=>'User updated successfully']);
+    }
+
+    public function deleteUser(Request $request, $id){
+        $user = User::find($id);
+        $user->delete();
+    }
+
+    public function addUser(Request $request){
+        return view('booksource.insert_user');
+    }
+
+    public function createUser(Request $request)
+    {
+        $data = $request->all();
+        $user =  User::create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => Hash::make($data['password']),
+            'role' => $data['role']
+        ]);
+
+        return redirect('/booksource/users')->with(['message'=>'User created successfully']); 
+    }
 }

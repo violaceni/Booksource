@@ -19,16 +19,14 @@
         @if(count($authors) > 0)
             @foreach($authors as $author)
                 <div class="card authors">
-                    {{-- <div class="card-header"> --}}
                     <div class="card-header author">{{$author->name}}</div>
-                    {{-- </div> --}}
                     <div class="card-body text">
-                        @foreach($author->books as $book)
-                            <h5 class="card-title">{{$book->name}}</h5>
-                        @endforeach
+                        <div> Age:  {{$author->age}}</div>
+                        <div> Address:  {{$author->address}}</div>
                     </div>
                 </div>
             @endforeach
+        
     </div>
     <div class="row">
         <div class="col-md-8">
