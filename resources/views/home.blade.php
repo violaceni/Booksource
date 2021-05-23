@@ -59,6 +59,24 @@
                             </div>
                         </a>
                     </div>
+                    <div class="col-md-3" style="margin-top: 25px">
+                        <a href="{{ route('booksource.books.admin') }}">
+                            <div class="card dashboard-card">
+                                <div class="card-body dashboard-card-body tx-center">
+                                    <h6 class="tx-rubik tx-uppercase tx-warning-f mg-b-0">{{ __('Show Books') }}</h6>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-3" style="margin-top: 25px">
+                        <a href="{{ route('booksource.authors.admin') }}">
+                            <div class="card dashboard-card">
+                                <div class="card-body dashboard-card-body tx-center">
+                                    <h6 class="tx-rubik tx-uppercase tx-warning-f mg-b-0">{{ __('Show Authors') }}</h6>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
                 @endif
             </div>
         </div>
