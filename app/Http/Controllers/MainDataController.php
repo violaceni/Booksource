@@ -106,4 +106,44 @@ class MainDataController extends Controller
 
         return redirect('/booksource/users')->with(['message'=>'User created successfully']); 
     }
+
+    public function getAllBooks(){
+        $books = Book::orderBy('created_at', 'desc')->paginate(6);
+        return view('booksource.books_list')->with(['books' => $books]);
+    }
+
+    public function editBook(Request $request, $id){
+        $book = Book::find($id);
+        return view('booksource.book_edit')->with(['book' => $book]);
+    }
+
+    public function updateBook(Request $request, $id){
+        $book = Book::find($id)->update($request->all());  
+        return redirect('/booksource/books')->with(['message'=>'Book updated successfully']);
+    }
+
+    public function deleteBook(Request $request, $id){
+        $book = Book::find($id);
+        $book->delete();
+    }
+
+    public function getAllAuthors(){
+        $authors = Author::orderBy('created_at', 'desc')->paginate(6);
+        return view('booksource.authors_list')->with(['authors' => $authors]);
+    }
+
+    public function editAuthor(Request $request, $id){
+        $author = Author::find($id);
+        return view('booksource.author_edit')->with(['author' => $author]);
+    }
+
+    public function updateAuthor(Request $request, $id){
+        $author = Author::find($id)->update($request->all());  
+        return redirect('/booksource/authors')->with(['message'=>'Author updated successfully']);
+    }
+
+    public function deleteAuthor(Request $request, $id){
+        $author = Author::find($id);
+        $author->delete();
+    }
 }
