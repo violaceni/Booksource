@@ -51,7 +51,7 @@
                     <img src="{{asset('storage/img/bookoftheweek.jpg') }}" class="wd-100p"/>
                 </div>
                 <div class="col-md-8 mg-t-20 mg-md-t-0">
-                    <h4>Full Stack 1001</h4>
+                    <h4>Being and nothingness</h4>
                     <p class="tx-13 mg-t-25">Lorem Ipsum is simply dummy text of the printing and typesetting industry.
                         Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown
                         printer took a galley of type and scrambled it to make a type specimen book. It has survived not
@@ -59,7 +59,6 @@
                         unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem
                         Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker
                         including versions of Lorem Ipsum.</p>
-                    <button type="button" class="btn btn-sm btn-outline-primary">{{__('Read More')}}</button>
                 </div>
             </div>
         </div>
