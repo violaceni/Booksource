@@ -27,13 +27,14 @@
               </tr>
             </thead>
             <tbody>
+                <div style="display: none">{{$count = 1}}</div>
                 @foreach ($users as $user)
                 <tr>
-                    <th scope="row">1</th>
+                    <th scope="row">{{$count++}}</th>
                     <td>{{$user->name}}</td>
                     <td>{{$user->email}}</td>
                     <td>{{$user->role}}</td>
-                    <td><a href="{{route('booksource.user.edit', $user->id)}}">Edit</a>   <a href="#">Delete</a></td> 
+                    <td><a href="{{route('booksource.user.edit', $user->id)}}">Edit</a></td> 
                 </tr>     
                 @endforeach
             </tbody>
